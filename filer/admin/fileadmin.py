@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from modeltranslation.admin import TabbedTranslationAdmin
 
 from .. import settings
 from ..models import File
@@ -20,7 +21,7 @@ class FileAdminChangeFrom(forms.ModelForm):
         exclude = ()
 
 
-class FileAdmin(PrimitivePermissionAwareModelAdmin):
+class FileAdmin(PrimitivePermissionAwareModelAdmin, TabbedTranslationAdmin):
     list_display = ('label',)
     list_per_page = 10
     search_fields = ['name', 'original_filename', 'sha1', 'description']

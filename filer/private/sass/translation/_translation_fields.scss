@@ -1,0 +1,10 @@
+/* Remove borders form modeltranslation TabbedDjangoJqueryTranslationAdmin language buttons */
+ul.ui-helper-clearfix {
+    border-bottom: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    & > li {
+        border-top: none !important;
+    }
+}
