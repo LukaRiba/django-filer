@@ -11,6 +11,8 @@
                 </th>
                 <th class="column-icon">&nbsp;</th>
                 <th class="column-name">{% trans "Name" %}</th>
+                <th class="column-size">{% trans "Created at" %}</th>
+                <th class="column-size">{% trans "Modified at" %}</th>
                 <th class="column-owner">{% trans "Owner" %}</th>
                 <th class="column-size">{% trans "Size" %}</th>
                 <th class="column-action">{% trans "Action" %}</th>
@@ -26,7 +28,7 @@
                             <img src="{% static 'filer/icons/unfiled_folder_48x48.png' %}" alt="{% trans 'Folder Icon' %}" width="28" height="28">
                         </a>
                     </td>
-                    <td class="column-name" colspan="4">
+                    <td class="column-name" colspan="6">
                         <div>
                             <a href="{{ item.get_admin_directory_listing_url_path }}{% filer_admin_context_url_params %}"
                                 title="{% blocktrans with item.name as item_label %}Change '{{ item_label }}' folder details{% endblocktrans %}">
@@ -63,6 +65,12 @@
                                         {{ subfolder.name }}
                                     </a>
                                 </div>
+                            </td>
+                            <td class="column-size">
+                                <span class="tiny"> {{ subfolder.uploaded_at|date:"d.m.Y" }}</span>
+                            </td>
+                            <td class="column-size">
+                                <span class="tiny"> {{ subfolder.modified_at|date:"d.m.Y" }}</span>
                             </td>
                             <td class="column-owner">
                                 {{ subfolder.owner|default:"n/a" }}
@@ -127,6 +135,12 @@
                                 {% if enable_permissions %}
                                     <div>{% trans "Permissions" %}: {% if file.is_public %}{% trans "disabled" %}{% else %}{% trans "enabled" %}{% endif %}</div>
                                 {% endif %}
+                            </td>
+                            <td class="column-size">
+                                <span class="tiny"> {{ file.uploaded_at|date:"d.m.Y" }}</span>
+                            </td>
+                            <td class="column-size">
+                                <span class="tiny"> {{ file.modified_at|date:"d.m.Y" }}</span>
                             </td>
                             <td class="column-owner">
                                 {{ file.owner|default:"n/a" }}
