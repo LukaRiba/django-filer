@@ -208,6 +208,27 @@
                             </div>
                         {% endif %}
                         {% block object-tools-items %}
+                            {# Sorting options #}
+                            <div class="filer-dropdown-container filer-dropdown-container-down">
+                                <a href="#" data-toggle="filer-dropdown" aria-expanded="false" title="{% trans 'Sort files' %}">
+                                    <span class="fa fa-sort"></span>
+                                </a>
+                                <ul class="filer-dropdown-menu">
+                                    <li>
+                                        <a href="?{% query_transform request order_by='original_filename' remove='page' %}">{% trans 'By filename' %}</a>
+                                    </li>
+                                    <li>
+                                        <a href="?{% query_transform request order_by='-_file_size' remove='page' %}">{% trans 'By size' %}</a>
+                                    </li>
+                                    <li>
+                                        <a href="?{% query_transform request order_by='-uploaded_at' remove='page' %}">{% trans 'By created at' %}</a>
+                                    </li>
+                                    <li>
+                                        <a href="?{% query_transform request order_by='-modified_at' remove='page' %}">{% trans 'By modified at' %}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {# ############### #}
                             <div class="navigator-button-wrapper">
                                 {% if folder.can_have_subfolders and can_make_folder %}
                                     <a href="{% url 'admin:filer-directory_listing-make_root_folder' %}?parent_id={{ folder.id }}{% if is_popup %}&amp;_popup=1{% endif %}"

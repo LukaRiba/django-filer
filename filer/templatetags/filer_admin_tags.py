@@ -56,3 +56,18 @@ def filer_has_permission(context, item, action):
     # Call the permission method.
     # This amounts to calling `item.has_X_permission(request)`
     return permission_method(request)
+
+@register.simple_tag
+def query_transform(request, **kwargs):
+    params = request.GET.copy()
+    to_remove = kwargs.pop('remove', '')
+
+    if to_remove:
+        for key in to_remove.strip().split(','):
+            if key in params:
+                del params[key]
+
+    for key, value in kwargs.items():
+        params[key] = value
+
+    return params.urlencode()
