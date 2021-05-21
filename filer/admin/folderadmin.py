@@ -299,12 +299,12 @@ class FolderAdmin(PrimitivePermissionAwareModelAdmin):
                 folder_qs = self.get_queryset(request)
                 file_qs = File.objects.all()
             folder_qs = self.filter_folder(folder_qs, search_terms)
-            file_qs = self.filter_file(file_qs, search_terms)
+            file_qs = self.filter_file(file_qs, search_terms).order_by('-uploaded_at')
 
             show_result_count = True
         else:
             folder_qs = folder.children.all()
-            file_qs = folder.files.all()
+            file_qs = folder.files.all().order_by('-uploaded_at')
             show_result_count = False
 
         folder_qs = folder_qs.order_by('name')
@@ -345,9 +345,6 @@ class FolderAdmin(PrimitivePermissionAwareModelAdmin):
             }
         except:  # noqa
             permissions = {}
-
-        if order_by is None or len(order_by) == 0:
-            folder_files.sort()
 
         items = folder_children + folder_files
         paginator = Paginator(items, FILER_PAGINATE_BY)
